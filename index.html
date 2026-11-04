@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbox Bengkulu</title>
+<link rel="stylesheet" href="style.css">
+<link rel="prefetch" href="g2all/index.html">
+<link rel="prefetch" href="1400/index.html">
+<link rel="prefetch" href="img.jpg">
+</head>
+<body>
+<h1 class="brand-title">Playbox Bengkulu GoldHen PS4</h1>
+<div class="contact-box">
+    <div class="wa-badge">WhatsApp: 0821-7277-220</div>
+    <div class="ig-badge">Instagram: playbox_gamingps</div>
+</div>
+<div id="msgs" class="fw-title">PS4 Exploit &amp; Multi Firmware Host</div>
+<hr>
+<div id="device-info" style="display: inline-block; background: rgba(3, 14, 34, 0.8); border: 1px solid rgba(0, 200, 255, 0.35); border-radius: 25px; padding: 8px 24px; font-size: 15px; margin: 5px auto 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); backdrop-filter: blur(8px);">
+    <span id="detected-text" style="color: #00e5ff; font-weight: 600;">Detecting device...</span>
+</div>
+<br>
+<div id=menu>
+<h1 style="font-size: 17px; color: #00e5ff; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin: 0 0 18px 0; text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);">Select Your Firmware</h1>
+<button class="btn btn-multi" onmouseover="msgs.innerHTML='PS4 GoldHEN Host for 5.05 and 7.00 to 13.00 FW - (Auto Exploit Selection)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('g2all/index.html')"> GoldHEN Multi FW </button>
+<button class="btn btn-multi" style="border-color:#00ff88; box-shadow: 0 0 15px rgba(0,255,136,0.4);" onmouseover="msgs.innerHTML='PS4 13.52 - 14.00 FW GoldHEN Host (Afterglow Engine - Dedicated Offline Cache)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('1400/index.html')"> 13.52 - 14.00 FW GoldHEN </button>
+<button class="btn" onmouseover="msgs.innerHTML='PS4 5.05 FW Host v2.5'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('505/index.html')"> 5.05 FW v2.5 </button>
+<button class="btn" onmouseover="msgs.innerHTML='PS4 6.72 FW GoldHEN Host'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('672goldhen/index.html')"> 6.72 FW GoldHEN </button>
+<button class="btn" onmouseover="msgs.innerHTML='PS4 6.72 FW Host v3.0'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('672/index.html')"> 6.72 FW v3.0 </button>
+<br>
+<button class="btn" onmouseover="msgs.innerHTML='PS4 9.00 FW GoldHEN Host - (FontFaceSet Webkit)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('900goldhen/index.html')"> 9.00 FW GoldHEN </button>
+<button class="btn" onmouseover="msgs.innerHTML='PS4 9.00 FW Host v3.0 - (FontFaceSet Webkit)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('900v3/index.html')"> 9.00 FW v3.0 </button>
+<br>
+<button class="btn" onmouseover="msgs.innerHTML='Restore a Host to User&#8217;s Guide without using DNS'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('restore/index.html')"> Restore Host </button>
+<br>
+<div class="credits-box">
+    <span class="credits-title">Designed by: <span class="credits-names">Andree Garshia J and Imam Abdurrahman</span></span>
+    <span class="credits-sub">A special thanks to all the devs on the scene.</span>
+</div>
+</div>
+<script>
+var _deviceDetected = false;
+function detectDevice() {
+    if (_deviceDetected) return;
+    _deviceDetected = true;
+    var ua = navigator.userAgent;
+    var match = ua.match(/PlayStation 4[ /]([\d.]+)/i);
+    var devText = document.getElementById("detected-text");
+    var devBox = document.getElementById("device-info");
+    
+    if (devText && devBox) {
+        if (match) {
+            var fw = match[1];
+            var fwNum = parseFloat(fw);
+            devText.innerHTML = "&#127918; Console Detected: PlayStation 4 (Firmware " + fw + ")";
+            devText.style.color = "#00ffcc";
+            devBox.style.borderColor = "rgba(0, 255, 204, 0.5)";
+            
+            try {
+                localStorage.removeItem('playbox_goldhen_loaded');
+                localStorage.removeItem('ExploitLoaded');
+            } catch (e) {}
+            
+            if (fwNum >= 13.50 && fwNum <= 14.00) {
+                var cd = 2;
+                var msgEl = document.getElementById("msgs");
+                var renderCd = function() {
+                    if (msgEl) msgEl.innerHTML = "Loading GoldHEN FW " + fw + " in " + cd + " seconds... <button onclick='clearInterval(" + cdInterval + "); msgs.innerHTML=\"PS4 Exploit &amp; Multi Firmware Host\";' class='btn' style='padding:3px 12px;font-size:12px;margin-left:10px;'>Cancel</button>";
+                };
+                var cdInterval = setInterval(function() {
+                    cd--;
+                    if (cd < 0) {
+                        clearInterval(cdInterval);
+                        location.replace('1400/index.html');
+                    } else {
+                        renderCd();
+                    }
+                }, 1000);
+                renderCd();
+            } else if (fwNum >= 11.50 && fwNum < 13.50) {
+                var cd = 2;
+                var msgEl = document.getElementById("msgs");
+                var renderCdMulti = function() {
+                    if (msgEl) msgEl.innerHTML = "Loading GoldHEN Multi FW in " + cd + " seconds... <button onclick='clearInterval(" + cdInterval + "); msgs.innerHTML=\"PS4 Exploit &amp; Multi Firmware Host\";' class='btn' style='padding:3px 12px;font-size:12px;margin-left:10px;'>Cancel</button>";
+                };
+                var cdInterval = setInterval(function() {
+                    cd--;
+                    if (cd < 0) {
+                        clearInterval(cdInterval);
+                        location.replace('g2all/index.html');
+                    } else {
+                        renderCdMulti();
+                    }
+                }, 1000);
+                renderCdMulti();
+            }
+        } else {
+            devText.innerHTML = "&#128187; Device Detected: PC / Laptop (Preview Mode)";
+            devText.style.color = "#ffd700";
+            devBox.style.borderColor = "rgba(255, 215, 0, 0.4)";
+        }
+    }
+}
+detectDevice();
+document.addEventListener("DOMContentLoaded", detectDevice);
+</script>
+</body>
+</html>

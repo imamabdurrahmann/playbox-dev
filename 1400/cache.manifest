@@ -1,0 +1,26 @@
+CACHE MANIFEST
+# Version: 2026-11-04-v26-support-1352-1400
+# Updated: 2026-11-04-22-30
+
+CACHE:
+../
+../index.html
+../img.jpg
+../style.css
+./
+index.html
+cache.html
+jb.html
+jb.js
+core.js
+mem.js
+int64.js
+ps4_offsets.js
+afterglow.js
+patchset-1400.bin
+patchset-1352.bin
+goldhen.bin
+hen.bin
+
+NETWORK:
+*

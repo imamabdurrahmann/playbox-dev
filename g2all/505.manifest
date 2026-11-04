@@ -1,0 +1,16 @@
+CACHE MANIFEST
+# Version: 2026-10-19-v9-auto-exploit
+
+CACHE: 
+../
+../index.html
+../img.jpg
+../style.css
+./
+index.html
+cache505.html
+goldhen_2.4b18.12.bin
+505/exploit.js
+
+NETWORK: 
+* 

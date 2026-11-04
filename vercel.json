@@ -1,0 +1,17 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)\\.manifest",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/cache-manifest; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }
+  ]
+}

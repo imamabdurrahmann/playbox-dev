@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html manifest="cache.manifest">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbox Bengkulu - PS4 9.00 FW GoldHEN Host (Offline Cache)</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.cache-box {
+    background: rgba(3, 14, 34, 0.85);
+    border: 1px solid rgba(0, 200, 255, 0.4);
+    border-radius: 20px;
+    padding: 35px 25px;
+    max-width: 580px;
+    width: 90%;
+    margin: 30px auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+}
+#msgs {
+    font-size: 24px;
+    color: #ffd700;
+    margin-bottom: 12px;
+    font-weight: 700;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+.sub {
+    font-size: 15px;
+    color: #8cb4db;
+    line-height: 1.6;
+}
+</style>
+</head>
+<body>
+<h1 class="brand-title">Playbox Bengkulu GoldHen PS4</h1>
+<div class="contact-box">
+    <div class="wa-badge">WhatsApp: 0821-7277-220</div>
+    <div class="ig-badge">Instagram: playbox_gamingps</div>
+</div>
+<div class="fw-title">PS4 9.00 FW GoldHEN Offline Cache</div>
+<hr>
+
+<div class="cache-box">
+    <h2 id="msgs">Mengunduh Cache Offline... 0%</h2>
+    <div id="sub" class="sub">Mohon tunggu hingga proses 100% selesai. Jangan matikan konsol.</div>
+</div>
+
+<div class="credits-box">
+    <span class="credits-title">Designed by: <span class="credits-names">Andree Garshia J and Imam Abdurrahman</span></span>
+    <span class="credits-sub">A special thanks to all the devs on the scene.</span>
+</div>
+
+<script>
+history.replaceState(null, null, 'index.html');
+
+var isCompleted = false;
+
+function DLProgress(e) {
+    var percent = (e.total > 0) ? Math.round((e.loaded / e.total) * 100) : 0;
+    var m = document.getElementById("msgs");
+    if (m && !isCompleted) m.innerHTML = "Mengunduh Cache: " + percent + "%";
+}
+
+function DisplayCacheProgress() {
+    isCompleted = true;
+    var m = document.getElementById("msgs");
+    var s = document.getElementById("sub");
+    if (m) {
+        m.innerHTML = "Cache Terpasang Sukses! &#10004;";
+        m.style.color = "#00ff88";
+    }
+    if (s) {
+        s.innerHTML = '<b style="color: #ffd700; font-size: 16px;">TUTUP BROWSER SEKARANG!</b><br><br>'
+            + '1. Tekan tombol <b>PS</b> pada stik & tutup browser.<br>'
+            + '2. Masuk ke <b>Settings &gt; Network</b> & matikan internet.<br>'
+            + '3. Buka browser kembali & GoldHEN akan berjalan otomatis 100% offline!<br><br>'
+            + '<a href="index.html" class="btn" style="display:inline-block; margin-top:10px; padding:10px 20px; font-weight:700; text-decoration:none;">Jalankan Exploit Sekarang &raquo;</a>';
+    }
+}
+
+if (window.applicationCache) {
+    window.applicationCache.addEventListener("progress", DLProgress, false);
+    window.applicationCache.oncached = function(e) { DisplayCacheProgress(); };
+    window.applicationCache.onupdateready = function(e) { DisplayCacheProgress(); };
+    window.applicationCache.onnoupdate = function(e) { DisplayCacheProgress(); };
+    
+    // If cache is already active and idle on page load
+    if (window.applicationCache.status === 1 || window.applicationCache.status === 4) {
+        DisplayCacheProgress();
+    }
+    
+    window.applicationCache.onerror = function(e) {
+        if (!isCompleted && window.applicationCache.status === 0) {
+            var m = document.getElementById("msgs");
+            if (m) {
+                m.innerHTML = "Gagal Memasang Cache! Clear Browser Data & Coba Lagi...";
+                m.style.color = "#ff5566";
+            }
+        }
+    };
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+*.bin binary
+*.manifest text
+*.html text
+*.js text
+*.css text

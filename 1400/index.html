@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html manifest="cache.manifest">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbox Bengkulu - PS4 13.52 - 14.00 FW GoldHEN Host</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+var ua = navigator.userAgent;
+var isPS4 = /PlayStation 4/i.test(ua);
+
+try {
+    localStorage.removeItem('playbox_goldhen_loaded');
+    localStorage.removeItem('ExploitLoaded');
+} catch (e) {}
+
+function runHost() {
+    var devText = document.getElementById("detected-text");
+    var devBox = document.getElementById("device-info");
+    var match = ua.match(/PlayStation 4[ /]([\d.]+)/i);
+    if (devText && devBox) {
+        if (isPS4) {
+            devText.innerHTML = "&#127918; Console Detected: PlayStation 4 (Firmware " + (match ? match[1] : "13.52 - 14.00") + ")";
+            devText.style.color = "#00ffcc";
+            devBox.style.borderColor = "rgba(0, 255, 204, 0.5)";
+        } else {
+            devText.innerHTML = "&#128187; Device Detected: PC / Laptop (Preview Mode)";
+            devText.style.color = "#ffd700";
+            devBox.style.borderColor = "rgba(255, 215, 0, 0.4)";
+        }
+    }
+    if (isPS4 && window.applicationCache && window.applicationCache.status === 0) {
+        window.location.replace("cache.html");
+        return;
+    }
+}
+</script>
+</head>
+<body onload="runHost();">
+<h1 class="brand-title">Playbox Bengkulu GoldHen PS4</h1>
+<div class="contact-box">
+    <div class="wa-badge">WhatsApp: 0821-7277-220</div>
+    <div class="ig-badge">Instagram: playbox_gamingps</div>
+</div>
+<div class="fw-title">PS4 13.52 - 14.00 FW GoldHEN Host</div>
+<hr>
+<br>
+<div id="device-info" style="display: inline-block; background: rgba(3, 14, 34, 0.8); border: 1px solid rgba(0, 200, 255, 0.35); border-radius: 25px; padding: 8px 24px; font-size: 15px; margin: 5px auto 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); backdrop-filter: blur(8px);">
+    <span id="detected-text" style="color: #00e5ff; font-weight: 600;">Detecting device...</span>
+</div>
+<br>
+<div id="menu">
+    <div style="padding: 15px 10px;">
+        <h1 id="msgs" style="font-size: 24px; color: #ffd700; margin: 0; text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);">Loading GoldHEN v2.4b18.12... Please Wait</h1>
+    </div>
+</div>
+<br>
+<div class="credits-box">
+    <span class="credits-title">Designed by: <span class="credits-names">Andree Garshia J and Imam Abdurrahman</span></span>
+    <span class="credits-sub">A special thanks to well0nez, m0zz, and all scene devs.</span>
+</div>
+
+<script type="module" src="jb.js"></script>
+</body>
+</html>
