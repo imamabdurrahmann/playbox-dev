@@ -225,6 +225,7 @@ var ua = navigator.userAgent;
 var match = ua.match(/PlayStation 4[ /]([\d.]+)/i);
 var isPS4 = match !== null;
 var fw = isPS4 ? match[1] : "PC Preview";
+var fwNum = isPS4 ? parseFloat(fw) : 0;
 
 var autoTimer = null;
 var cdSec = 3;
@@ -241,11 +242,25 @@ try {
     localStorage.removeItem("playbox_goldhen_loaded");
 } catch(e) {}
 
+function redirectCorrectRoom(fwN) {
+    if (fwN >= 13.50 && fwN <= 14.00) return "../1400/index.html";
+    if (fwN >= 6.70 && fwN <= 6.72) return "../672goldhen/index.html";
+    if (fwN == 9.00) return "../900goldhen/index.html";
+    if (fwN >= 5.00 && fwN <= 5.07) return "../505/index.html";
+    return "../g2all/index.html";
+}
 function detectDev() {
     var devText = document.getElementById("detected-text");
     var devBox = document.getElementById("device-info");
     if (devText && devBox) {
         if (isPS4) {
+            if (fwNum < 6.70 || fwNum > 6.72) {
+                devText.innerHTML = "&#9888; Konsol Terdeteksi FW " + fw + "! Dialihkan ke Host yang sesuai...";
+                devText.style.color = "#ffd700";
+                devBox.style.borderColor = "rgba(255, 215, 0, 0.6)";
+                setTimeout(function() { window.location.replace(redirectCorrectRoom(fwNum)); }, 1200);
+                return;
+            }
             devText.innerHTML = "&#127918; Konsol Terdeteksi: PlayStation 4 (FW " + fw + ")";
             devText.style.color = "#00ffcc";
             devBox.style.borderColor = "rgba(0, 255, 204, 0.5)";
@@ -366,6 +381,7 @@ function runExtraBin(fileName, prettyName) {
 }
 
 function startCountdown() {
+    if (isPS4 && (fwNum < 6.70 || fwNum > 6.72)) return;
     var autoCheck = document.getElementById("autoCheck");
     if (!autoCheck || !autoCheck.checked) return;
     

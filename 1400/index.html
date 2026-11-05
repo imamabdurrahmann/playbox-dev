@@ -6,6 +6,14 @@
 <title>PLAYBOX DEVELOPER TESTING - PS4 13.02 - 14.00 FW GoldHEN Host</title>
 <link rel="stylesheet" href="../style.css">
 <script>
+function redirectCorrectRoom(fwN) {
+    if (fwN >= 13.50 && fwN <= 14.00) return "../1400/index.html";
+    if (fwN >= 6.70 && fwN <= 6.72) return "../672goldhen/index.html";
+    if (fwN == 9.00) return "../900goldhen/index.html";
+    if (fwN >= 5.00 && fwN <= 5.07) return "../505/index.html";
+    return "../g2all/index.html";
+}
+
 var ua = navigator.userAgent;
 var isPS4 = /PlayStation 4/i.test(ua);
 
@@ -22,7 +30,7 @@ function runHost() {
         var detectedFwNum = parseFloat(match[1]);
         if (detectedFwNum < 13.50) {
             if (devText) devText.innerHTML = "&#127918; FW " + match[1] + " Dialihkan ke Host Multi FW...";
-            setTimeout(function() { window.location.replace("../g2all/index.html"); }, 600);
+            setTimeout(function() { window.location.replace(redirectCorrectRoom(detectedFwNum)); }, 1200);
             return;
         }
     }
