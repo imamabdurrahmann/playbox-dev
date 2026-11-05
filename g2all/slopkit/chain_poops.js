@@ -39,6 +39,7 @@ const params = new URLSearchParams(location.search);
 const STOP_BEFORE_DOUBLE = params.get("stop") === "beforedouble";
 
 function hostOk() {
+    if (window.onExploitDone) window.onExploitDone("GoldHEN v2.4b18.12 Berhasil Dimuat ✔");
     var m = document.getElementById("msgs");
     if (m) {
         m.innerHTML = "GoldHEN v2.4b18.12 Loaded ...";
@@ -46,6 +47,7 @@ function hostOk() {
 }
 
 function hostFail() {
+    if (window.onExploitFail) window.onExploitFail("Gagal memuat exploit! Silakan restart konsol.");
     var m = document.getElementById("msgs");
     if (m) {
         m.innerHTML = "Failed to Load! Restart Your Console ...";

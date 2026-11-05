@@ -9,6 +9,7 @@ function load_script(src, remote = true, transfer = []) {
 }
 
 async function doJb() {
+  if (window.onExploitProgress) window.onExploitProgress("Menginisialisasi WebKit Heap...", 20);
   await load_script("css/misc.js");
 
   try {
@@ -25,6 +26,7 @@ async function doJb() {
         logger.info("Unsupported console " + version.console);
     }
 
+    if (window.onExploitProgress) window.onExploitProgress("Membentuk Memory Primitive...", 38);
     logger.info("===USERLAND===");
 
     let rw = undefined;
@@ -53,11 +55,16 @@ async function doJb() {
     }
 
     if (fn.setuid.invoke(0) !== -1) {
-      msgs.innerHTML = "GoldHEN is Already Loaded ...";
+      if (window.onExploitDone) {
+        window.onExploitDone("GoldHEN Sudah Terpasang Sebelumnya ✔");
+      } else {
+        msgs.innerHTML = "GoldHEN is Already Loaded ...";
+      }
       return;
     }
 
     var exploitChain = localStorage.getItem("exploitChain") || "lapse";
+    if (window.onExploitProgress) window.onExploitProgress("Memicu Kernel Exploit (" + exploitChain + ")...", 65);
     await load_script("css/" + exploitChain + ".js");
     logger.info("===" + exploitChain.toUpperCase() + "===");
 
@@ -98,6 +105,7 @@ async function doJb() {
     find_all_proc();
 
     if (fn.setuid.invoke(0) === -1) {
+      if (window.onExploitProgress) window.onExploitProgress("Root OK! Memasang Patches & Injeksi GoldHEN...", 85);
       jailbreak();
 
       const kpatches_rsp = await fetch("css/ps4/patches/" + constants.KPATCH);
@@ -111,10 +119,18 @@ async function doJb() {
       load_bin(bin_u8);
     }
 
-    msgs.innerHTML = "GoldHEN v2.4b18.12 Loaded ...";
+    if (window.onExploitDone) {
+      window.onExploitDone("GoldHEN v2.4b18.12 Berhasil Dimuat ✔");
+    } else {
+      msgs.innerHTML = "GoldHEN v2.4b18.12 Loaded ...";
+    }
     logger.info("===END===");
   } catch (e) {
-    msgs.innerHTML = "Failed to Load! Restart Your Console ...";
-    msgs.style.color = "yellow";
+    if (window.onExploitFail) {
+      window.onExploitFail("Gagal memuat exploit: " + (e.message || e));
+    } else {
+      msgs.innerHTML = "Failed to Load! Restart Your Console ...";
+      msgs.style.color = "yellow";
+    }
   }
 }

@@ -61,6 +61,7 @@ const STOP_BEFORE_DOUBLE = params.get("stop") === "beforedouble";
 
 
 function hostOk() {
+  if (window.onExploitDone) window.onExploitDone("GoldHEN v2.4b18.12 Berhasil Dimuat ✔");
   var m = document.getElementById("msgs");
   if (m) {
     m.innerHTML = "GoldHEN v2.4b18.12 Loaded ...";

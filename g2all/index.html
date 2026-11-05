@@ -3,13 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PLAYBOX DEVELOPER TESTING - PS4 [5.05] 7.00 - 13.00 FW GoldHEN Host</title>
+<title>PLAYBOX DEVELOPER TESTING - PS4 [5.05] 7.00 - 13.00 FW GoldHEN Multi Host</title>
 <link rel="stylesheet" href="../style.css">
 <link rel="prefetch" href="cacheslopkit.html">
 <link rel="prefetch" href="cachecss.html">
 <link rel="prefetch" href="cache900.html">
 <link rel="prefetch" href="cache700.html">
 <link rel="prefetch" href="cache505.html">
+<style>
+.stage-card {
+    background: rgba(3, 14, 34, 0.88);
+    border: 1px solid rgba(0, 200, 255, 0.4);
+    border-radius: 20px;
+    padding: 24px 20px;
+    max-width: 640px;
+    width: 90%;
+    margin: 15px auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+}
+.pick-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 14px 0;
+}
+.opt-label {
+    background: rgba(0, 40, 80, 0.6);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 12px;
+    padding: 10px 18px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #e0f7fc;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+    user-select: none;
+}
+.opt-label:hover {
+    border-color: #00ffcc;
+    background: rgba(0, 70, 130, 0.7);
+    box-shadow: 0 0 12px rgba(0,229,255,0.4);
+}
+.opt-label input[type="radio"], .opt-label input[type="checkbox"] {
+    accent-color: #00ffcc;
+    cursor: pointer;
+}
+.step-item {
+    font-size: 14px;
+    color: #8cb4db;
+    margin: 6px 0;
+    transition: color 0.3s;
+}
+.step-item.active {
+    color: #ffd700;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+.step-item.done {
+    color: #00ff88;
+    font-weight: 600;
+}
+.extra-tools {
+    display: none;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 229, 255, 0.2);
+}
+.progress-bar-wrap {
+    width: 100%;
+    max-width: 440px;
+    background: rgba(0, 20, 40, 0.8);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 12px;
+    height: 14px;
+    margin: 15px auto;
+    overflow: hidden;
+    position: relative;
+}
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #0077ff, #00ffcc);
+    box-shadow: 0 0 12px rgba(0, 255, 204, 0.8);
+    transition: width 0.35s ease;
+}
+</style>
 </head>
 <body>
 <h1 class="brand-title">PLAYBOX DEVELOPER TESTING</h1>
@@ -17,18 +99,111 @@
     <div class="wa-badge">WhatsApp: 0821-7277-220</div>
     <div class="ig-badge">Instagram: playbox_gamingps</div>
 </div>
-<div class="fw-title">[5.05] 7.00 - 13.00 FW GoldHEN Host</div>
+<div class="fw-title">PS4 [5.05] 7.00 - 13.00 FW GoldHEN Multi Host</div>
 <hr>
 
-<div id="device-info" style="display: inline-block; background: rgba(3, 14, 34, 0.8); border: 1px solid rgba(0, 200, 255, 0.35); border-radius: 25px; padding: 8px 24px; font-size: 15px; margin: 5px auto 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); backdrop-filter: blur(8px);">
+<div id="device-info" style="display: inline-block; background: rgba(3, 14, 34, 0.8); border: 1px solid rgba(0, 200, 255, 0.35); border-radius: 25px; padding: 8px 24px; font-size: 15px; margin: 5px auto 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); backdrop-filter: blur(8px);">
     <span id="detected-text" style="color: #00e5ff; font-weight: 600;">Detecting device...</span>
 </div>
 <br>
 
-<div id="menu">
-    <div style="padding: 15px 10px;">
-        <h1 id="msgs" style="font-size: 24px; color: #ffd700; margin: 0;">Memulai Host... Mohon Tunggu</h1>
+<div id="cache-status" style="font-size: 13px; color: #8cb4db; margin-bottom: 10px;">
+    <span id="cache-text">Memeriksa status sistem...</span>
+</div>
+
+<div class="stage-card">
+    <!-- STAGE 1: LANDING & ENGINE SELECTION -->
+    <div id="stage-landing">
+        <h2 id="msgs" style="font-size: 21px; color: #ffd700; margin: 0 0 12px; text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);">
+            Deteksi Firmware Otomatis
+        </h2>
+
+        <div id="engineNotice" style="font-size: 14px; color: #00ffcc; margin-bottom: 10px;">
+            Memeriksa kecocokan firmware konsol...
+        </div>
+
+        <div id="chainPicker" class="pick-row" style="display: none;">
+            <label class="opt-label">
+                <input type="radio" name="chainChoice" value="lapse" checked>
+                <span><b>Lapse Chain</b> (Direkomendasikan)</span>
+            </label>
+            <label class="opt-label">
+                <input type="radio" name="chainChoice" value="poops">
+                <span>Poops Chain (Alternatif)</span>
+            </label>
+        </div>
+
+        <div style="margin: 15px 0 10px;">
+            <label class="opt-label" style="font-size: 13px; padding: 6px 14px;">
+                <input type="checkbox" id="autoCheck" checked>
+                <span>Autostart otomatis (3 detik)</span>
+            </label>
+        </div>
+
+        <div style="margin-top: 15px;">
+            <button id="btnStart" class="btn btn-multi" onclick="userTriggerStart();" style="padding: 10px 28px; font-weight: 700; font-size: 15px;">
+                Mulai Exploit
+            </button>
+            <button id="btnCancel" class="btn" onclick="cancelAutostart();" style="display: none; padding: 10px 22px; margin-left: 8px;">
+                Batal
+            </button>
+        </div>
+
+        <!-- PC PREVIEW INSTALLERS -->
+        <div id="pcInstallerBox" style="display: none; margin-top: 20px;">
+            <h4 style="color: #ffd700; margin: 0 0 10px;">Installer Cache Offline Mandiri:</h4>
+            <div style="display: flex; flex-direction: column; gap: 8px; align-items: center;">
+                <a href="cacheslopkit.html" class="btn btn-multi" style="text-decoration:none; width: 320px; font-size:13px;">&#128190; Pasang Cache FW 11.50 - 13.00</a>
+                <a href="cachecss.html" class="btn" style="text-decoration:none; width: 320px; font-size:13px;">&#128190; Pasang Cache FW 10.00 - 11.02</a>
+                <a href="cache900.html" class="btn" style="text-decoration:none; width: 320px; font-size:13px;">&#128190; Pasang Cache FW 9.00 - 9.60</a>
+                <a href="cache700.html" class="btn" style="text-decoration:none; width: 320px; font-size:13px;">&#128190; Pasang Cache FW 7.00 - 8.52</a>
+                <a href="cache505.html" class="btn" style="text-decoration:none; width: 320px; font-size:13px;">&#128190; Pasang Cache FW 5.05</a>
+            </div>
+        </div>
+
+        <!-- DEDICATED HOST JUMP DRAWER -->
+        <div style="margin-top: 20px;">
+            <button class="btn" onclick="toggleExtraTools();" style="padding: 6px 16px; font-size: 12px; opacity: 0.85;">
+                &#128279; Host Firmware Terdedikasi Lainnya &#9662;
+            </button>
+        </div>
+
+        <div id="extraTools" class="extra-tools">
+            <a href="../1400/index.html" class="btn btn-multi" style="text-decoration:none; margin: 4px;">13.52 - 14.00 FW Afterglow</a>
+            <a href="../900goldhen/index.html" class="btn btn-multi" style="text-decoration:none; margin: 4px;">9.00 FW GoldHEN</a>
+            <a href="../672goldhen/index.html" class="btn btn-multi" style="text-decoration:none; margin: 4px;">6.72 FW GoldHEN</a>
+            <a href="../505/index.html" class="btn btn-multi" style="text-decoration:none; margin: 4px;">5.05 FW GoldHEN</a>
+        </div>
     </div>
+
+    <!-- STAGE 2: LIVE EXECUTION PROGRESS -->
+    <div id="stage-runner" style="display: none;">
+        <h2 id="runnerMsg" style="font-size: 22px; color: #ffd700; margin: 0 0 15px; text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);">
+            Menyiapkan Eksploitasi...
+        </h2>
+
+        <div class="progress-bar-wrap">
+            <div id="progressFill" class="progress-bar-fill"></div>
+        </div>
+        
+        <div id="stepList" style="text-align: left; max-width: 440px; margin: 15px auto 0;">
+            <div id="step1" class="step-item">&#9679; [1/4] Mempersiapkan WebKit Heap &amp; Garbage Collector...</div>
+            <div id="step2" class="step-item">&#9679; [2/4] Membentuk Memory Read/Write Primitive...</div>
+            <div id="step3" class="step-item">&#9679; [3/4] Memicu Kernel Privilege Escalation...</div>
+            <div id="step4" class="step-item">&#9679; [4/4] Root Kernel OK! Menyuntikkan GoldHEN...</div>
+        </div>
+
+        <div id="runnerActions" style="margin-top: 20px; display: none;">
+            <button class="btn" onclick="location.reload();" style="padding: 8px 20px;">
+                Muat Ulang Halaman
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="credits-box">
+    <span class="credits-title">Designed by: <span class="credits-names">Andree Garshia J and Imam Abdurrahman</span></span>
+    <span class="credits-sub">A special thanks to ChendoChap, sleirsgoevy, TheFloW, SiSTR0, well0nez, and all scene devs.</span>
 </div>
 
 <script>
@@ -38,153 +213,300 @@ var isPS4 = match !== null;
 var fwVersion = isPS4 ? match[1] : "Unknown";
 var fwNum = parseFloat(fwVersion);
 
-function updateStatus(msg, isError) {
-    var m = document.getElementById("msgs");
-    if (m) {
-        m.innerHTML = msg;
-        m.style.color = isError ? "#ff5566" : "#ffd700";
-    }
-}
+var autoTimer = null;
+var cdSec = 3;
+var hasStarted = false;
+var watchdogTimer = null;
+var targetEngine = "";
+
+try {
+    sessionStorage.removeItem("playbox_goldhen_loaded");
+    localStorage.removeItem("playbox_goldhen_loaded");
+} catch(e) {}
 
 function detectDevice() {
     var devText = document.getElementById("detected-text");
     var devBox = document.getElementById("device-info");
+    var notice = document.getElementById("engineNotice");
+    var picker = document.getElementById("chainPicker");
+
     if (devText && devBox) {
         if (isPS4) {
             devText.innerHTML = "&#127918; Konsol Terdeteksi: PlayStation 4 (FW " + fwVersion + ")";
             devText.style.color = "#00ffcc";
             devBox.style.borderColor = "rgba(0, 255, 204, 0.5)";
+
+            if (fwNum >= 13.50 && fwNum <= 14.00) {
+                targetEngine = "afterglow_1400";
+                if (notice) notice.innerHTML = "Firmware " + fwVersion + " cocok dengan Host Afterglow Dedicated.";
+                setTimeout(function() { window.location.replace("../1400/index.html"); }, 600);
+                return;
+            } else if (fwNum >= 11.50 && fwNum <= 13.00) {
+                targetEngine = "slopkit";
+                if (notice) notice.innerHTML = "Engine Terpilih: <b>Slopkit / Afterglow</b> (FW 11.50 - 13.00)";
+                if (picker) picker.style.display = "flex";
+            } else if (fwNum >= 10.00 && fwNum <= 11.02) {
+                targetEngine = "css";
+                if (notice) notice.innerHTML = "Engine Terpilih: <b>WebKit CSS Exploit</b> (FW 10.00 - 11.02)";
+                if (picker) picker.style.display = "flex";
+            } else if (fwNum >= 9.00 && fwNum <= 9.60) {
+                targetEngine = "900";
+                if (notice) notice.innerHTML = "Engine Terpilih: <b>psfree WebKit</b> (FW 9.00 - 9.60)";
+            } else if (fwNum >= 7.00 && fwNum <= 8.52) {
+                targetEngine = "700";
+                if (notice) notice.innerHTML = "Engine Terpilih: <b>psfree WebKit</b> (FW 7.00 - 8.52)";
+            } else if (fwNum == 5.05 || fwNum == 5.07) {
+                targetEngine = "505";
+                if (notice) notice.innerHTML = "Engine Terpilih: <b>WebKit UAF</b> (FW 5.05)";
+            } else {
+                targetEngine = "unknown";
+                if (notice) notice.innerHTML = "<span style='color:#ff5566;'>Firmware " + fwVersion + " tidak didukung oleh Multi-Host.</span>";
+            }
         } else {
             devText.innerHTML = "&#128187; Perangkat Terdeteksi: PC / Laptop (Preview Mode)";
             devText.style.color = "#ffd700";
             devBox.style.borderColor = "rgba(255, 215, 0, 0.4)";
+            if (notice) notice.innerHTML = "Silakan gunakan tautan installer offline di bawah untuk pengujian.";
+            var pcBox = document.getElementById("pcInstallerBox");
+            if (pcBox) pcBox.style.display = "block";
         }
     }
 }
 detectDevice();
 
-function onScriptError() {
-    updateStatus("File Exploit Tidak Ditemukan! Bersihkan Data Browser & Pasang Ulang Cache...", true);
+function toggleExtraTools() {
+    var t = document.getElementById("extraTools");
+    if (t) t.style.display = (t.style.display === "block") ? "none" : "block";
 }
 
-if (!isPS4) {
-    updateStatus("Mode Preview PC / Laptop Aktif");
-    var menu = document.getElementById("menu");
-    if (menu) {
-        var previewHtml = '<div style="margin-top: 15px; font-size: 14px; color: #8cb4db; line-height: 1.6;">'
-            + 'Di konsol PS4, sistem akan <b>otomatis mendeteksi firmware</b> dan menjalankan exploit secara offline.<br>'
-            + 'Pilih salah satu menu di bawah ini untuk menguji instalasi cache atau eksekusi runner:'
-            + '</div>'
-            + '<div style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px; align-items: center;">'
-            + '<a href="cacheslopkit.html" class="btn btn-multi" style="text-decoration:none; display:inline-block; width: 340px; padding: 12px 20px; font-weight:700;">&#128190; Installer Cache (FW 11.50 - 13.00)</a>'
-            + '<a href="cachecss.html" class="btn" style="text-decoration:none; display:inline-block; width: 340px; padding: 12px 20px; font-weight:700;">&#128190; Installer Cache (FW 10.00 - 11.02)</a>'
-            + '<a href="cache900.html" class="btn" style="text-decoration:none; display:inline-block; width: 340px; padding: 12px 20px; font-weight:700;">&#128190; Installer Cache (FW 9.00 - 9.60)</a>'
-            + '</div>';
-        menu.insertAdjacentHTML('beforeend', previewHtml);
+function checkCacheInstalled(fw) {
+    if (window.applicationCache && (window.applicationCache.status === 1 || window.applicationCache.status === 4)) {
+        return true;
     }
-} else {
-        if (fwNum === 14.00 || fwNum >= 13.50) {
-        updateStatus("Mengarahkan ke Host Afterglow (FW " + fwVersion + ")...");
-        setTimeout(function() {
-            window.location.replace("../1400/index.html");
-        }, 300);
-        return;
-    }
+    try {
+        if (fw >= 11.50 && fw <= 13.00 && localStorage.getItem('playbox_cached_slopkit') === '1') return true;
+        if (fw >= 10.00 && fw <= 11.02 && localStorage.getItem('playbox_cached_css') === '1') return true;
+        if (fw >= 9.00 && fw <= 9.60 && localStorage.getItem('playbox_cached_900') === '1') return true;
+        if (fw >= 7.00 && fw <= 8.52 && localStorage.getItem('playbox_cached_700') === '1') return true;
+        if ((fw == 5.05 || fw == 5.07) && localStorage.getItem('playbox_cached_505') === '1') return true;
+        if (localStorage.getItem('playbox_cached_any') === '1') return true;
+    } catch (e) {}
+    return false;
+}
 
-    function checkCacheInstalled(fw) {
-        if (window.applicationCache && (window.applicationCache.status === 1 || window.applicationCache.status === 4)) {
-            return true;
+function startCountdown() {
+    if (!isPS4) return;
+    var autoCheck = document.getElementById("autoCheck");
+    if (!autoCheck || !autoCheck.checked) return;
+    
+    var btnCancel = document.getElementById("btnCancel");
+    if (btnCancel) btnCancel.style.display = "inline-block";
+    
+    var msgs = document.getElementById("msgs");
+    
+    autoTimer = setInterval(function () {
+        if (msgs) {
+            msgs.innerHTML = "Menjalankan Exploit otomatis dalam <b style='color:#00ffcc;font-size:24px;'>" + cdSec + "</b> detik...";
         }
-        try {
-            if (fw >= 11.50 && fw <= 13.00 && localStorage.getItem('playbox_cached_slopkit') === '1') return true;
-            if (fw >= 10.00 && fw <= 11.02 && localStorage.getItem('playbox_cached_css') === '1') return true;
-            if (fw >= 9.00 && fw <= 9.60 && localStorage.getItem('playbox_cached_900') === '1') return true;
-            if (fw >= 7.00 && fw <= 8.52 && localStorage.getItem('playbox_cached_700') === '1') return true;
-            if ((fw == 5.05 || fw == 5.07) && localStorage.getItem('playbox_cached_505') === '1') return true;
-            if (localStorage.getItem('playbox_cached_any') === '1') return true;
-        } catch (e) {}
-        return false;
+        cdSec--;
+        if (cdSec < 0) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+            userTriggerStart();
+        }
+    }, 1000);
+}
+
+function cancelAutostart() {
+    if (autoTimer) {
+        clearInterval(autoTimer);
+        autoTimer = null;
     }
+    var btnCancel = document.getElementById("btnCancel");
+    if (btnCancel) btnCancel.style.display = "none";
+    var msgs = document.getElementById("msgs");
+    if (msgs) msgs.innerHTML = "Deteksi Firmware Otomatis";
+    var autoCheck = document.getElementById("autoCheck");
+    if (autoCheck) autoCheck.checked = false;
+}
 
-    var cacheReady = checkCacheInstalled(fwNum);
-
-    if (!cacheReady) {
-        if (fwNum == 5.05 || fwNum == 5.07) {
-            updateStatus("Memasang Cache Offline FW " + fwVersion + "...");
-            window.location.replace("cache505.html");
-        } else if (fwNum >= 7.00 && fwNum <= 8.52) {
-            updateStatus("Memasang Cache Offline FW " + fwVersion + "...");
-            window.location.replace("cache700.html");
-        } else if (fwNum >= 9.00 && fwNum <= 9.60) {
-            updateStatus("Memasang Cache Offline FW " + fwVersion + "...");
-            window.location.replace("cache900.html");
-        } else if (fwNum >= 10.00 && fwNum <= 11.02) {
-            updateStatus("Memasang Cache Offline FW " + fwVersion + "...");
-            window.location.replace("cachecss.html");
-        } else if (fwNum >= 11.50 && fwNum <= 13.00) {
-            updateStatus("Memasang Cache Offline FW " + fwVersion + "...");
-            window.location.replace("cacheslopkit.html");
+function setStep(stepIndex, isDone) {
+    for (var i = 1; i <= 4; i++) {
+        var el = document.getElementById("step" + i);
+        if (!el) continue;
+        if (i < stepIndex) {
+            el.className = "step-item done";
+        } else if (i === stepIndex) {
+            el.className = isDone ? "step-item done" : "step-item active";
         } else {
-            updateStatus("Firmware Tidak Didukung: " + fwVersion + " (Mendukung 5.05 & 7.00 - 13.00)", true);
+            el.className = "step-item";
         }
-    } else {
-        updateStatus("Memuat Exploit untuk FW " + fwVersion + "... Harap Tunggu");
-        setTimeout(function() {
-            if (fwNum == 5.05 || fwNum == 5.07) {
-                var script = document.createElement('script');
-                script.src = "505/exploit.js";
-                script.onerror = onScriptError;
-                document.head.appendChild(script);
-            } else if (fwNum >= 7.00 && fwNum <= 8.52) {
-                var script = document.createElement('script');
-                script.type = 'module';
-                script.src = "700/alert.js";
-                script.onerror = onScriptError;
-                document.head.appendChild(script);
-            } else if (fwNum >= 9.00 && fwNum <= 9.60) {
-                var script = document.createElement('script');
-                script.type = 'module';
-                script.src = "900/alert.js";
-                script.onerror = onScriptError;
-                document.head.appendChild(script);
-            } else if (fwNum >= 10.00 && fwNum <= 11.02) {
-                var script = document.createElement('script');
-                script.src = "css/main.js";
-                script.onerror = onScriptError;
-                script.onload = function() {
-                    setTimeout(function() {
-                        if (typeof doJb !== 'undefined') doJb();
-                    }, 500);
-                };
-                document.head.appendChild(script);
-            } else if (fwNum >= 11.50 && fwNum <= 12.02) {
-                var script = document.createElement('script');
-                script.type = 'module';
-                script.src = "slopkit/chain_lapse.js";
-                script.onerror = onScriptError;
-                document.head.appendChild(script);
-            } else if (fwNum >= 12.50 && fwNum <= 13.00) {
-                var script = document.createElement('script');
-                script.type = 'module';
-                script.src = "slopkit/chain_poops.js";
-                script.onerror = onScriptError;
-                document.head.appendChild(script);
-            } else if (fwNum >= 13.02 && fwNum <= 13.52) {
-                var script = document.createElement('script');
-                script.type = 'module';
-                script.src = "slopkit/jb.js";
-                script.onerror = onScriptError;
-                document.head.appendChild(script);
-            } else {
-                updateStatus("Firmware Tidak Didukung: " + fwVersion, true);
-            }
-        }, 200);
     }
 }
+
+function setProgress(pct) {
+    var bar = document.getElementById("progressFill");
+    if (bar) bar.style.width = pct + "%";
+}
+
+// Progress hooks
+window.onExploitProgress = function(msg, percent) {
+    var rm = document.getElementById("runnerMsg");
+    if (rm) rm.innerHTML = msg;
+    if (percent) setProgress(percent);
+
+    if (percent <= 25) {
+        setStep(1, false);
+    } else if (percent <= 45) {
+        setStep(2, false);
+    } else if (percent <= 75) {
+        setStep(3, false);
+    } else {
+        setStep(4, false);
+    }
+};
+
+window.onExploitDone = function(msg) {
+    if (watchdogTimer) clearTimeout(watchdogTimer);
+    setProgress(100);
+    setStep(4, true);
+    var rm = document.getElementById("runnerMsg");
+    if (rm) {
+        rm.innerHTML = "<span style='color:#00ff88;text-shadow:0 0 15px rgba(0,255,136,0.6);'>✔ " + msg + "</span>";
+    }
+    var ra = document.getElementById("runnerActions");
+    if (ra) ra.style.display = "block";
+};
+
+window.onExploitFail = function(msg) {
+    if (watchdogTimer) clearTimeout(watchdogTimer);
+    var rm = document.getElementById("runnerMsg");
+    if (rm) {
+        rm.innerHTML = "<span style='color:#ff5252;'>&#10008; " + msg + "</span>";
+    }
+    var ra = document.getElementById("runnerActions");
+    if (ra) ra.style.display = "block";
+};
+
+function onScriptError() {
+    window.onExploitFail("File Exploit Tidak Ditemukan! Bersihkan Data Browser &amp; Pasang Ulang Cache.");
+}
+
+function userTriggerStart() {
+    if (hasStarted) return;
+    hasStarted = true;
+    
+    if (autoTimer) {
+        clearInterval(autoTimer);
+        autoTimer = null;
+    }
+
+    // Save chain choice
+    var radios = document.getElementsByName("chainChoice");
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            try { localStorage.setItem("exploitChain", radios[i].value); } catch(e) {}
+            break;
+        }
+    }
+
+    var stageLanding = document.getElementById("stage-landing");
+    var stageRunner = document.getElementById("stage-runner");
+    if (stageLanding) stageLanding.style.display = "none";
+    if (stageRunner) stageRunner.style.display = "block";
+    
+    setProgress(15);
+    setStep(1, false);
+    var rm = document.getElementById("runnerMsg");
+    if (rm) rm.innerHTML = "Mempersiapkan WebKit Heap &amp; Garbage Collector...";
+
+    // Watchdog timer (60 seconds)
+    watchdogTimer = setTimeout(function () {
+        if (rm) {
+            rm.innerHTML = "<span style='color:#ffd700;'>&#9888; Exploit berjalan lebih lama dari biasanya. Jika konsol freeze, silakan restart.</span>";
+        }
+        var ra = document.getElementById("runnerActions");
+        if (ra) ra.style.display = "block";
+    }, 60000);
+
+    // Give browser GC a moment to settle memory
+    setTimeout(function() {
+        if (isPS4 && !checkCacheInstalled(fwNum)) {
+            // Check if need cache install first
+            if (fwNum == 5.05 || fwNum == 5.07) {
+                window.location.replace("cache505.html");
+                return;
+            } else if (fwNum >= 7.00 && fwNum <= 8.52) {
+                window.location.replace("cache700.html");
+                return;
+            } else if (fwNum >= 9.00 && fwNum <= 9.60) {
+                window.location.replace("cache900.html");
+                return;
+            } else if (fwNum >= 10.00 && fwNum <= 11.02) {
+                window.location.replace("cachecss.html");
+                return;
+            } else if (fwNum >= 11.50 && fwNum <= 13.00) {
+                window.location.replace("cacheslopkit.html");
+                return;
+            }
+        }
+
+        // Execute runner based on FW
+        if (fwNum == 5.05 || fwNum == 5.07) {
+            var script = document.createElement('script');
+            script.src = "505/exploit.js";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        } else if (fwNum >= 7.00 && fwNum <= 8.52) {
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.src = "700/alert.js";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        } else if (fwNum >= 9.00 && fwNum <= 9.60) {
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.src = "900/alert.js";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        } else if (fwNum >= 10.00 && fwNum <= 11.02) {
+            var script = document.createElement('script');
+            script.src = "css/main.js";
+            script.onerror = onScriptError;
+            script.onload = function() {
+                setTimeout(function() {
+                    if (typeof doJb !== 'undefined') doJb();
+                }, 300);
+            };
+            document.head.appendChild(script);
+        } else if (fwNum >= 11.50 && fwNum <= 12.02) {
+            var chosenChain = localStorage.getItem("exploitChain") || "lapse";
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.src = (chosenChain === "poops") ? "slopkit/chain_poops.js" : "slopkit/chain_lapse.js";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        } else if (fwNum >= 12.50 && fwNum <= 13.00) {
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.src = "slopkit/chain_poops.js";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        } else if (fwNum >= 13.02 && fwNum <= 13.52) {
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.src = "slopkit/jb.js";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        } else {
+            window.onExploitFail("Firmware " + fwVersion + " belum didukung oleh Multi-Host.");
+        }
+    }, 400);
+}
+
+window.addEventListener("DOMContentLoaded", function() {
+    startCountdown();
+});
 </script>
-<div class="credits-box">
-    <span class="credits-title">Designed by: <span class="credits-names">Andree Garshia J and Imam Abdurrahman</span></span>
-    <span class="credits-sub">A special thanks to all the devs on the scene.</span>
-</div>
 </body>
 </html>
