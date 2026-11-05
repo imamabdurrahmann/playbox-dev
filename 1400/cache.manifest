@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# Version: 2026-11-04-v26-support-1352-1400
-# Updated: 2026-11-04-22-30
+# Version: 2026-11-05-v27-support-1302-1400
+# Updated: 2026-11-05-11-25
 
 CACHE:
 ../
@@ -19,6 +19,7 @@ ps4_offsets.js
 afterglow.js
 patchset-1400.bin
 patchset-1352.bin
+patchset-1302.bin
 goldhen.bin
 hen.bin
 

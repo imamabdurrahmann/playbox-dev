@@ -24,7 +24,7 @@
 <div id=menu>
 <h1 style="font-size: 17px; color: #00e5ff; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin: 0 0 18px 0; text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);">Select Your Firmware</h1>
 <button class="btn btn-multi" onmouseover="msgs.innerHTML='PS4 GoldHEN Host for 5.05 and 7.00 to 13.00 FW - (Auto Exploit Selection)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('g2all/index.html')"> GoldHEN Multi FW </button>
-<button class="btn btn-multi" style="border-color:#00ff88; box-shadow: 0 0 15px rgba(0,255,136,0.4);" onmouseover="msgs.innerHTML='PS4 13.52 - 14.00 FW GoldHEN Host (Afterglow Engine - Dedicated Offline Cache)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('1400/index.html')"> 13.52 - 14.00 FW GoldHEN </button>
+<button class="btn btn-multi" style="border-color:#00ff88; box-shadow: 0 0 15px rgba(0,255,136,0.4);" onmouseover="msgs.innerHTML='PS4 13.02 - 14.00 FW GoldHEN Host (Afterglow Engine - Dedicated Offline Cache)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('1400/index.html')"> 13.02 - 14.00 FW GoldHEN </button>
 <button class="btn btn-multi" style="border-color:#00e5ff; box-shadow: 0 0 12px rgba(0,229,255,0.35);" onmouseover="msgs.innerHTML='PS4 5.05 FW GoldHEN Dedicated Host (Clean &amp; Lightweight)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('505/index.html')"> 5.05 FW GoldHEN </button>
 <button class="btn btn-multi" style="border-color:#00e5ff; box-shadow: 0 0 12px rgba(0,229,255,0.35);" onmouseover="msgs.innerHTML='PS4 6.72 FW GoldHEN Dedicated Host (Clean &amp; Lightweight)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('672goldhen/index.html')"> 6.72 FW GoldHEN </button>
 <button class="btn" onmouseover="msgs.innerHTML='PS4 6.72 FW Host v3.0'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('672/index.html')"> 6.72 FW v3.0 </button>
@@ -62,7 +62,7 @@ function detectDevice() {
                 localStorage.removeItem('ExploitLoaded');
             } catch (e) {}
             
-            if (fwNum >= 13.50 && fwNum <= 14.00) {
+            if (fwNum >= 13.02 && fwNum <= 14.00) {
                 var cd = 2;
                 var msgEl = document.getElementById("msgs");
                 var renderCd = function() {
