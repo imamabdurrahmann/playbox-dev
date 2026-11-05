@@ -1,16 +1,35 @@
 CACHE MANIFEST
-# Version: 2026-10-19-v7-fix
+# Version: 2026-11-05-v1-900goldhen
 CACHE:
 ../
 ../index.html
 ../img.jpg
 ../style.css
-goldhen_2.4b18.12.bin
 index.html
 int64.js
-kexploit.js
 rop.js
 webkit.js
+kexploit.js
+goldhen_2.4b18.12.bin
+goldhen_2.3.bin
+app2usb.bin
+backup.bin
+restore.bin
+dumper.bin
+dumperG.bin
+dumperU.bin
+dumperMGU.bin
+dumperSGU.bin
+ftp.bin
+Orbis-Toolbox-900.bin
+ps4debug.bin
+todex.bin
+webrte.bin
+disable-updates.bin
+enable-updates.bin
+history-blocker.bin
+kernel-dumper.bin
+module-dumper.bin
 
 NETWORK:
 *

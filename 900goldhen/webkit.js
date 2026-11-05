@@ -10,6 +10,7 @@ var HAMMER_FONT_NAME = "font8"; //must take bucket 3 of 8 (counting from zero)
 var HAMMER_NSTRINGS = 700; //tweak this if crashing during hammer time
 
 function poc() {
+    if (window.onExploitProgress) window.onExploitProgress("Mempersiapkan WebKit Font Face Spray...", 20);
 
     var union = new ArrayBuffer(8);
     var union_b = new Uint8Array(union);
@@ -459,5 +460,6 @@ function poc() {
         }
     };
     window.p = prim;
+    if (window.onExploitProgress) window.onExploitProgress("Memory Primitive Terbentuk! Menyiapkan Kernel...", 35);
     run_hax();
 }

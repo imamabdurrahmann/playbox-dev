@@ -1,106 +1,588 @@
 <!DOCTYPE html>
-<html>
+<html manifest="cache.manifest">
 <head>
-<title>PLAYBOX DEVELOPER TESTING - PS4 9.00 FW GoldHEN Host</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLAYBOX DEVELOPER TESTING - PS4 9.00 FW GoldHEN Dedicated Host</title>
 <link rel="stylesheet" href="../style.css">
+<style>
+.stage-card {
+    background: rgba(3, 14, 34, 0.88);
+    border: 1px solid rgba(0, 200, 255, 0.4);
+    border-radius: 20px;
+    padding: 24px 20px;
+    max-width: 620px;
+    width: 90%;
+    margin: 15px auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+}
+.pick-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 14px 0;
+}
+.opt-label {
+    background: rgba(0, 40, 80, 0.6);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 12px;
+    padding: 10px 18px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #e0f7fc;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+    user-select: none;
+}
+.opt-label:hover {
+    border-color: #00ffcc;
+    background: rgba(0, 70, 130, 0.7);
+    box-shadow: 0 0 12px rgba(0,229,255,0.4);
+}
+.opt-label input[type="radio"], .opt-label input[type="checkbox"] {
+    accent-color: #00ffcc;
+    cursor: pointer;
+}
+.step-item {
+    font-size: 14px;
+    color: #8cb4db;
+    margin: 6px 0;
+    transition: color 0.3s;
+}
+.step-item.active {
+    color: #ffd700;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+.step-item.done {
+    color: #00ff88;
+    font-weight: 600;
+}
+.extra-tools {
+    display: none;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 229, 255, 0.2);
+}
+.progress-bar-wrap {
+    width: 100%;
+    max-width: 440px;
+    background: rgba(0, 20, 40, 0.8);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 12px;
+    height: 14px;
+    margin: 15px auto;
+    overflow: hidden;
+    position: relative;
+}
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #0077ff, #00ffcc);
+    box-shadow: 0 0 12px rgba(0, 255, 204, 0.8);
+    transition: width 0.35s ease;
+}
+.usb-modal {
+    display: none;
+    background: rgba(0, 15, 35, 0.95);
+    border: 2px solid #00ffcc;
+    box-shadow: 0 0 30px rgba(0, 255, 204, 0.5);
+    border-radius: 18px;
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 480px;
+    animation: pulseBorder 2s infinite alternate;
+}
+@keyframes pulseBorder {
+    from { box-shadow: 0 0 15px rgba(0, 255, 204, 0.4); }
+    to { box-shadow: 0 0 35px rgba(0, 255, 204, 0.9); }
+}
+</style>
 <script src="int64.js"></script>
 <script src="rop.js"></script>
 <script src="kexploit.js"></script>
 <script src="webkit.js"></script>
-<script>
-var ua = navigator.userAgent;
-var isPS4 = /PlayStation 4/i.test(ua);
-
-function runHost() {
-    if (!isPS4) {
-        var m = document.getElementById("msgs");
-        if (m) m.innerHTML = "Playbox Bengkulu - PS4 9.00 FW GoldHEN <span style='font-size:15px;color:#ffd700;'>(Preview PC)</span>";
-        return;
-    }
-    if (window.applicationCache && window.applicationCache.status === 0) {
-        window.location.replace("cache.html");
-        return;
-    }
-    setTimeout(poc, 100);
-}
-</script>
 </head>
-<body onload="runHost();">
+<body>
 <h1 class="brand-title">PLAYBOX DEVELOPER TESTING</h1>
 <div class="contact-box">
     <div class="wa-badge">WhatsApp: 0821-7277-220</div>
     <div class="ig-badge">Instagram: playbox_gamingps</div>
 </div>
-<div class="fw-title">PS4 9.00 FW GoldHEN Host</div>
+<div class="fw-title">
+    <span style="color: #00ff88; font-weight: 600; font-size: 19px;">Pass = <span id="passCounter">0</span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    PS4 9.00 FW GoldHEN Dedicated Host
+    <span style="color: #ff5252; font-weight: 600; font-size: 19px;">&nbsp;&nbsp;&nbsp;&nbsp;Fail = <span id="failCounter">0</span></span>
+</div>
 <hr>
-<br>
-<div id="device-info" style="display: inline-block; background: rgba(3, 14, 34, 0.8); border: 1px solid rgba(0, 200, 255, 0.35); border-radius: 25px; padding: 8px 24px; font-size: 15px; margin: 5px auto 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); backdrop-filter: blur(8px);">
+
+<div id="device-info" style="display: inline-block; background: rgba(3, 14, 34, 0.8); border: 1px solid rgba(0, 200, 255, 0.35); border-radius: 25px; padding: 8px 24px; font-size: 15px; margin: 5px auto 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); backdrop-filter: blur(8px);">
     <span id="detected-text" style="color: #00e5ff; font-weight: 600;">Detecting device...</span>
 </div>
 <br>
-<div id="menu">
-    <div style="padding: 15px 10px;">
-        <h1 id="msgs" style="font-size: 24px; color: #ffd700; margin: 0;">Loading GoldHEN v2.4b18.12... Please Wait</h1>
+
+<div id="cache-status" style="font-size: 13px; color: #8cb4db; margin-bottom: 10px;">
+    <span id="cache-text">Memeriksa status cache offline...</span>
+</div>
+
+<div class="stage-card">
+    <!-- STAGE 1: LANDING & PAYLOAD SELECTION -->
+    <div id="stage-landing">
+        <h2 id="msgs" style="font-size: 21px; color: #ffd700; margin: 0 0 12px; text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);">
+            Pilih Payload &amp; Mulai Exploit
+        </h2>
+        
+        <div class="pick-row">
+            <label class="opt-label">
+                <input type="radio" name="payloadChoice" value="goldhen_2.4b18.12" checked>
+                <span><b>GoldHEN v2.4b18.12</b> (Terbaru)</span>
+            </label>
+            <label class="opt-label">
+                <input type="radio" name="payloadChoice" value="goldhen_2.3">
+                <span>GoldHEN v2.3 (Stabil)</span>
+            </label>
+            <label class="opt-label">
+                <input type="radio" name="payloadChoice" value="binloader">
+                <span>Bin Loader (Port 9020)</span>
+            </label>
+        </div>
+
+        <div style="margin: 15px 0 10px;">
+            <label class="opt-label" style="font-size: 13px; padding: 6px 14px;">
+                <input type="checkbox" id="autoCheck" checked>
+                <span>Autostart otomatis (3 detik)</span>
+            </label>
+        </div>
+
+        <div style="margin-top: 15px;">
+            <button id="btnStart" class="btn btn-multi" onclick="userTriggerStart();" style="padding: 10px 28px; font-weight: 700; font-size: 15px;">
+                Mulai Exploit
+            </button>
+            <button id="btnCancel" class="btn" onclick="cancelAutostart();" style="display: none; padding: 10px 22px; margin-left: 8px;">
+                Batal
+            </button>
+        </div>
+
+        <div style="margin-top: 18px;">
+            <button class="btn" onclick="toggleExtraTools();" style="padding: 6px 16px; font-size: 12px; opacity: 0.85;">
+                &#9881; Utility &amp; Tools Lainnya &#9662;
+            </button>
+        </div>
+
+        <div id="extraTools" class="extra-tools">
+            <button class="btn" onclick="runExtraBin('app2usb.bin', 'App2USB')">App2USB</button>
+            <button class="btn" onclick="runExtraBin('ftp.bin', 'FTP Server')">FTP Server</button>
+            <button class="btn" onclick="runExtraBin('dumper.bin', 'Game Dumper')">Game Dumper</button>
+            <button class="btn" onclick="runExtraBin('dumperG.bin', 'Dump Game Only')">Dump Game Only</button>
+            <button class="btn" onclick="runExtraBin('dumperU.bin', 'Dump Update Only')">Dump Update Only</button>
+            <br>
+            <button class="btn" onclick="runExtraBin('backup.bin', 'DB Backup')">DB Backup</button>
+            <button class="btn" onclick="runExtraBin('restore.bin', 'DB Restore')">DB Restore</button>
+            <button class="btn" onclick="runExtraBin('Orbis-Toolbox-900.bin', 'Orbis Toolbox')">Orbis Toolbox</button>
+            <button class="btn" onclick="runExtraBin('ps4debug.bin', 'PS4 Debug')">PS4 Debug</button>
+            <button class="btn" onclick="runExtraBin('todex.bin', 'ToDex')">ToDex</button>
+            <button class="btn" onclick="runExtraBin('webrte.bin', 'WebRTE')">WebRTE</button>
+            <br>
+            <button class="btn" onclick="runExtraBin('disable-updates.bin', 'Disable Updates')">Disable Updates</button>
+            <button class="btn" onclick="runExtraBin('enable-updates.bin', 'Enable Updates')">Enable Updates</button>
+            <button class="btn" onclick="runExtraBin('history-blocker.bin', 'History Blocker')">History Blocker</button>
+            <button class="btn" onclick="runExtraBin('kernel-dumper.bin', 'Kernel Dumper')">Kernel Dumper</button>
+            <button class="btn" onclick="runExtraBin('module-dumper.bin', 'Module Dumper')">Module Dumper</button>
+        </div>
+    </div>
+
+    <!-- STAGE 2: LIVE EXECUTION PROGRESS -->
+    <div id="stage-runner" style="display: none;">
+        <h2 id="runnerMsg" style="font-size: 22px; color: #ffd700; margin: 0 0 15px; text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);">
+            Menyiapkan Eksploitasi...
+        </h2>
+
+        <div class="progress-bar-wrap">
+            <div id="progressFill" class="progress-bar-fill"></div>
+        </div>
+
+        <!-- INTERACTIVE USB MODAL (NON-BLOCKING) -->
+        <div id="usbModal" class="usb-modal">
+            <h3 style="color: #00ffcc; margin: 0 0 10px; font-size: 19px;">🔌 Colokkan USB exfathax Sekarang!</h3>
+            <p style="color: #e0f7fc; font-size: 14px; margin: 0 0 12px; line-height: 1.5;">
+                Tunggu notifikasi <b style="color:#ffd700;">"Unsupported File System"</b> (atau Sistem file tidak didukung) muncul di pojok kiri atas TV Anda.<br>
+                Setelah notifikasi itu muncul, klik tombol di bawah:
+            </p>
+            <button id="btnUsbContinue" class="btn btn-multi" onclick="onUsbConfirmed();" style="padding: 10px 24px; font-weight: 700; font-size: 15px;">
+                Saya Sudah Colok USB &amp; Siap Lanjut &#10140;
+            </button>
+        </div>
+        
+        <div id="stepList" style="text-align: left; max-width: 440px; margin: 15px auto 0;">
+            <div id="step1" class="step-item">&#9679; [1/4] Mempersiapkan WebKit Heap &amp; Font Face Spray...</div>
+            <div id="step2" class="step-item">&#9679; [2/4] Membentuk Memory Read/Write Primitive...</div>
+            <div id="step3" class="step-item">&#9679; [3/4] Menyiapkan Kernel ROP &amp; Kchain...</div>
+            <div id="step4" class="step-item">&#9679; [4/4] Memicu Kernel Exploit &amp; Menyuntikkan Payload...</div>
+        </div>
+
+        <div id="runnerActions" style="margin-top: 20px; display: none;">
+            <button class="btn" onclick="location.reload();" style="padding: 8px 20px;">
+                Muat Ulang Halaman
+            </button>
+        </div>
     </div>
 </div>
+
 <div class="credits-box">
     <span class="credits-title">Designed by: <span class="credits-names">Andree Garshia J and Imam Abdurrahman</span></span>
-    <span class="credits-sub">A special thanks to all the devs on the scene.</span>
+    <span class="credits-sub">A special thanks to ChendoChap, Znullptr, Specter, SiSTR0, well0nez, and all scene devs.</span>
 </div>
-<script>
-function allset(){
-msgs.innerHTML = LoadedMSG
-}
 
-function load_poc(){
- var req = new XMLHttpRequest();
- req.responseType = "arraybuffer";
- req.open('GET', PLfile);
- req.send();
- req.onreadystatechange = function () {
-  if (req.readyState == 4) {
-   PLD = req.response;
-   var payload_buffer = chain.syscall(477, 0, PLD.byteLength*4 , 7, 0x1002, -1, 0);
-   var pl = p.array_from_address(payload_buffer, PLD.byteLength*4);
-   var padding = new Uint8Array(4 - (req.response.byteLength % 4) % 4);
-   var tmp = new Uint8Array(req.response.byteLength + padding.byteLength);
-   tmp.set(new Uint8Array(req.response), 0);
-   tmp.set(padding, req.response.byteLength);
-   var shellcode = new Uint32Array(tmp.buffer);
-   pl.set(shellcode,0);
-   var pthread = p.malloc(0x10);
-   chain.call(libKernelBase.add32(OFFSET_lk_pthread_create), pthread, 0x0, payload_buffer, 0);
-   allset();
-  }
- };
-}
-
-function jbdone(){
-LoadedMSG = "GoldHEN v2.4b18.12 Loaded ...";
-PLfile = "goldhen_2.4b18.12.bin";
-setTimeout(load_poc, 500);
-}
-</script>
 <script>
-function detectDevice() {
-    var ua = navigator.userAgent;
-    var match = ua.match(/PlayStation 4[ /]([\d.]+)/i);
+// Pass & Fail Counter
+if (localStorage.passcount == null) localStorage.passcount = 0;
+document.getElementById("passCounter").innerHTML = localStorage.passcount;
+if (localStorage.failcount == null) localStorage.failcount = 0;
+document.getElementById("failCounter").innerHTML = localStorage.failcount;
+
+var ua = navigator.userAgent;
+var match = ua.match(/PlayStation 4[ /]([\d.]+)/i);
+var isPS4 = match !== null;
+var fw = isPS4 ? match[1] : "PC Preview";
+
+var autoTimer = null;
+var cdSec = 3;
+var hasStarted = false;
+var watchdogTimer = null;
+var usbCallback = null;
+
+var PLfile = "goldhen_2.4b18.12.bin";
+var LoadedMSG = "GoldHEN v2.4b18.12 Berhasil Dimuat ✔";
+
+try {
+    sessionStorage.removeItem("playbox_goldhen_loaded");
+    localStorage.removeItem("playbox_goldhen_loaded");
+} catch(e) {}
+
+function detectDev() {
     var devText = document.getElementById("detected-text");
     var devBox = document.getElementById("device-info");
     if (devText && devBox) {
-        if (match) {
-            devText.innerHTML = "&#127918; Console Detected: PlayStation 4 (Firmware " + match[1] + ")";
+        if (isPS4) {
+            devText.innerHTML = "&#127918; Konsol Terdeteksi: PlayStation 4 (FW " + fw + ")";
             devText.style.color = "#00ffcc";
             devBox.style.borderColor = "rgba(0, 255, 204, 0.5)";
         } else {
-            devText.innerHTML = "&#128187; Device Detected: PC / Laptop (Preview Mode)";
+            devText.innerHTML = "&#128187; Perangkat Terdeteksi: PC / Laptop (Preview Mode)";
             devText.style.color = "#ffd700";
             devBox.style.borderColor = "rgba(255, 215, 0, 0.4)";
         }
     }
 }
-detectDevice();
-document.addEventListener("DOMContentLoaded", detectDevice);
+detectDev();
+
+// Offline AppCache Handler
+var appCache = (function () {
+    try { return window.applicationCache || null; } catch (e) { return null; }
+})();
+
+function updateCacheText() {
+    var ct = document.getElementById("cache-text");
+    if (!ct || !appCache) return;
+    try {
+        if (appCache.status === appCache.CHECKING) {
+            ct.innerHTML = "&#9881; Memeriksa pembaruan cache offline...";
+            ct.style.color = "#ffd700";
+        } else if (appCache.status === appCache.DOWNLOADING) {
+            ct.innerHTML = "&#128190; Mengunduh file cache offline... Mohon tunggu";
+            ct.style.color = "#00e5ff";
+        } else if (appCache.status === appCache.UPDATEREADY) {
+            ct.innerHTML = "&#10004; Cache offline terbaru siap! Memperbarui...";
+            ct.style.color = "#00ff88";
+            try { appCache.swapCache(); } catch(e) {}
+        } else if (appCache.status === appCache.IDLE) {
+            ct.innerHTML = "&#10004; Cache Siap (Offline OK) - Koneksi internet dapat dimatikan";
+            ct.style.color = "#00ff88";
+        } else if (appCache.status === appCache.OBSOLETE) {
+            ct.innerHTML = "&#9888; Status cache usang. Halaman akan menyinkron ulang.";
+            ct.style.color = "#ffb300";
+        } else {
+            ct.innerHTML = "&#10004; Cache Aktif (Siap digunakan offline)";
+            ct.style.color = "#00ff88";
+        }
+    } catch(e) {}
+}
+
+if (appCache) {
+    appCache.addEventListener("checking", updateCacheText, false);
+    appCache.addEventListener("downloading", updateCacheText, false);
+    appCache.addEventListener("progress", function (e) {
+        var ct = document.getElementById("cache-text");
+        if (ct && e.total > 0) {
+            var pct = Math.round((e.loaded / e.total) * 100);
+            ct.innerHTML = "&#128190; Memasang Cache Offline: " + pct + "% (" + e.loaded + "/" + e.total + ")";
+            ct.style.color = "#00e5ff";
+        }
+    }, false);
+    appCache.addEventListener("cached", function () {
+        var ct = document.getElementById("cache-text");
+        if (ct) {
+            ct.innerHTML = "&#10004; Cache Berhasil Dipasang! Buka kembali browser secara offline kapan saja.";
+            ct.style.color = "#00ff88";
+        }
+    }, false);
+    appCache.addEventListener("updateready", function () {
+        var ct = document.getElementById("cache-text");
+        if (ct) {
+            ct.innerHTML = "&#10004; Cache Diperbarui! Memuat versi terbaru...";
+            ct.style.color = "#00ff88";
+        }
+        try { appCache.swapCache(); } catch(e) {}
+    }, false);
+    appCache.addEventListener("noupdate", updateCacheText, false);
+    appCache.addEventListener("error", function () {
+        var ct = document.getElementById("cache-text");
+        if (ct) {
+            ct.innerHTML = "&#9888; Offline Mode Aktif (Gunakan cache lokal yang tersimpan)";
+            ct.style.color = "#00ff88";
+        }
+    }, false);
+    updateCacheText();
+}
+
+function toggleExtraTools() {
+    var t = document.getElementById("extraTools");
+    if (t) t.style.display = (t.style.display === "block") ? "none" : "block";
+}
+
+function resolvePayloadSelection() {
+    var radios = document.getElementsByName("payloadChoice");
+    var val = "goldhen_2.4b18.12";
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) { val = radios[i].value; break; }
+    }
+    if (val === "goldhen_2.4b18.12") {
+        PLfile = "goldhen_2.4b18.12.bin";
+        LoadedMSG = "GoldHEN v2.4b18.12 Berhasil Dimuat ✔";
+    } else if (val === "goldhen_2.3") {
+        PLfile = "goldhen_2.3.bin";
+        LoadedMSG = "GoldHEN v2.3 Berhasil Dimuat ✔";
+    } else if (val === "binloader") {
+        PLfile = "goldhen_2.4b18.12.bin";
+        LoadedMSG = "GoldHEN Dimuat! Server BinLoader Siap di Port 9020 ✔";
+    }
+}
+
+function runExtraBin(fileName, prettyName) {
+    cancelAutostart();
+    PLfile = fileName;
+    LoadedMSG = prettyName + " Berhasil Dimuat ✔";
+    userTriggerStart();
+}
+
+function startCountdown() {
+    var autoCheck = document.getElementById("autoCheck");
+    if (!autoCheck || !autoCheck.checked) return;
+    
+    var btnCancel = document.getElementById("btnCancel");
+    if (btnCancel) btnCancel.style.display = "inline-block";
+    
+    var msgs = document.getElementById("msgs");
+    
+    autoTimer = setInterval(function () {
+        if (msgs) {
+            msgs.innerHTML = "Menjalankan Exploit otomatis dalam <b style='color:#00ffcc;font-size:24px;'>" + cdSec + "</b> detik...";
+        }
+        cdSec--;
+        if (cdSec < 0) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+            userTriggerStart();
+        }
+    }, 1000);
+}
+
+function cancelAutostart() {
+    if (autoTimer) {
+        clearInterval(autoTimer);
+        autoTimer = null;
+    }
+    var btnCancel = document.getElementById("btnCancel");
+    if (btnCancel) btnCancel.style.display = "none";
+    var msgs = document.getElementById("msgs");
+    if (msgs) msgs.innerHTML = "Pilih Payload &amp; Mulai Exploit";
+    var autoCheck = document.getElementById("autoCheck");
+    if (autoCheck) autoCheck.checked = false;
+}
+
+function setStep(stepIndex, isDone) {
+    for (var i = 1; i <= 4; i++) {
+        var el = document.getElementById("step" + i);
+        if (!el) continue;
+        if (i < stepIndex) {
+            el.className = "step-item done";
+        } else if (i === stepIndex) {
+            el.className = isDone ? "step-item done" : "step-item active";
+        } else {
+            el.className = "step-item";
+        }
+    }
+}
+
+function setProgress(pct) {
+    var bar = document.getElementById("progressFill");
+    if (bar) bar.style.width = pct + "%";
+}
+
+// Progress hooks
+window.onExploitProgress = function(msg, percent) {
+    var rm = document.getElementById("runnerMsg");
+    if (rm) rm.innerHTML = msg;
+    if (percent) setProgress(percent);
+
+    if (percent <= 25) {
+        setStep(1, false);
+    } else if (percent <= 40) {
+        setStep(2, false);
+    } else if (percent <= 70) {
+        setStep(3, false);
+    } else {
+        setStep(4, false);
+    }
+};
+
+window.onInsertUsbPrompt = function(continueCb) {
+    usbCallback = continueCb;
+    setProgress(72);
+    setStep(3, true);
+    var rm = document.getElementById("runnerMsg");
+    if (rm) rm.innerHTML = "Menunggu Pemasangan USB exfathax...";
+    var modal = document.getElementById("usbModal");
+    if (modal) modal.style.display = "block";
+};
+
+function onUsbConfirmed() {
+    var modal = document.getElementById("usbModal");
+    if (modal) modal.style.display = "none";
+    var rm = document.getElementById("runnerMsg");
+    if (rm) rm.innerHTML = "Memverifikasi Eksploitasi Kernel...";
+    if (usbCallback) {
+        var cb = usbCallback;
+        usbCallback = null;
+        setTimeout(cb, 100);
+    }
+}
+
+window.onExploitDone = function(msg) {
+    if (watchdogTimer) clearTimeout(watchdogTimer);
+    localStorage.passcount = ++localStorage.passcount;
+    document.getElementById("passCounter").innerHTML = localStorage.passcount;
+    setProgress(100);
+    setStep(4, true);
+    var rm = document.getElementById("runnerMsg");
+    if (rm) {
+        rm.innerHTML = "<span style='color:#00ff88;text-shadow:0 0 15px rgba(0,255,136,0.6);'>✔ " + msg + "</span>";
+    }
+    var ra = document.getElementById("runnerActions");
+    if (ra) ra.style.display = "block";
+};
+
+window.onExploitFail = function(msg) {
+    if (watchdogTimer) clearTimeout(watchdogTimer);
+    localStorage.failcount = ++localStorage.failcount;
+    document.getElementById("failCounter").innerHTML = localStorage.failcount;
+    var rm = document.getElementById("runnerMsg");
+    if (rm) {
+        rm.innerHTML = "<span style='color:#ff5252;'>&#10008; " + msg + "</span>";
+    }
+    var ra = document.getElementById("runnerActions");
+    if (ra) ra.style.display = "block";
+};
+
+// Payload Loader for FW 9.00
+function allset() {
+    if (window.onExploitDone) {
+        window.onExploitDone(LoadedMSG + " (Cabut USB exfathax sekarang)");
+    } else {
+        var msgs = document.getElementById("msgs");
+        if (msgs) msgs.innerHTML = LoadedMSG;
+    }
+}
+
+function load_poc() {
+    if (window.onExploitProgress) window.onExploitProgress("Mengunduh Payload " + PLfile + "...", 96);
+    var req = new XMLHttpRequest();
+    req.responseType = "arraybuffer";
+    req.open('GET', PLfile);
+    req.send();
+    req.onreadystatechange = function () {
+        if (req.readyState == 4) {
+            if (req.status == 200 || req.status == 0) {
+                var PLD = req.response;
+                var payload_buffer = chain.syscall(477, 0, PLD.byteLength * 4, 7, 0x1002, -1, 0);
+                var pl = p.array_from_address(payload_buffer, PLD.byteLength * 4);
+                var padding = new Uint8Array(4 - (req.response.byteLength % 4) % 4);
+                var tmp = new Uint8Array(req.response.byteLength + padding.byteLength);
+                tmp.set(new Uint8Array(req.response), 0);
+                tmp.set(padding, req.response.byteLength);
+                var shellcode = new Uint32Array(tmp.buffer);
+                pl.set(shellcode, 0);
+                var pthread = p.malloc(0x10);
+                chain.call(libKernelBase.add32(OFFSET_lk_pthread_create), pthread, 0x0, payload_buffer, 0);
+                allset();
+            } else {
+                if (window.onExploitFail) window.onExploitFail("Gagal mengunduh file payload: " + PLfile);
+            }
+        }
+    };
+}
+
+function jbdone() {
+    setTimeout(load_poc, 400);
+}
+
+function userTriggerStart() {
+    if (hasStarted) return;
+    hasStarted = true;
+    
+    if (autoTimer) {
+        clearInterval(autoTimer);
+        autoTimer = null;
+    }
+    
+    resolvePayloadSelection();
+
+    var stageLanding = document.getElementById("stage-landing");
+    var stageRunner = document.getElementById("stage-runner");
+    if (stageLanding) stageLanding.style.display = "none";
+    if (stageRunner) stageRunner.style.display = "block";
+    
+    setProgress(15);
+    setStep(1, false);
+    var rm = document.getElementById("runnerMsg");
+    if (rm) rm.innerHTML = "Mempersiapkan WebKit Font Face Spray...";
+
+    // Watchdog timer (60 seconds)
+    watchdogTimer = setTimeout(function () {
+        if (rm) {
+            rm.innerHTML = "<span style='color:#ffd700;'>&#9888; Exploit berjalan lebih lama dari biasanya. Jika konsol freeze, silakan restart.</span>";
+        }
+        var ra = document.getElementById("runnerActions");
+        if (ra) ra.style.display = "block";
+    }, 60000);
+
+    // Give WebKit Garbage Collector a moment to settle memory heap
+    setTimeout(function() {
+        try {
+            poc();
+        } catch(e) {
+            if (window.onExploitFail) window.onExploitFail("Gagal saat memicu WebKit: " + e);
+        }
+    }, 250);
+}
+
+window.addEventListener("DOMContentLoaded", function() {
+    startCountdown();
+});
 </script>
 </body>
 </html>

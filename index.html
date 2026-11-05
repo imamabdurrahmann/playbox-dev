@@ -29,8 +29,8 @@
 <button class="btn btn-multi" style="border-color:#00e5ff; box-shadow: 0 0 12px rgba(0,229,255,0.35);" onmouseover="msgs.innerHTML='PS4 6.72 FW GoldHEN Dedicated Host (Clean &amp; Lightweight)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('672goldhen/index.html')"> 6.72 FW GoldHEN </button>
 <button class="btn" onmouseover="msgs.innerHTML='PS4 6.72 FW Host v3.0'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('672/index.html')"> 6.72 FW v3.0 </button>
 <br>
-<button class="btn" onmouseover="msgs.innerHTML='PS4 9.00 FW GoldHEN Host - (FontFaceSet Webkit)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('900goldhen/index.html')"> 9.00 FW GoldHEN </button>
-<button class="btn" onmouseover="msgs.innerHTML='PS4 9.00 FW Host v3.0 - (FontFaceSet Webkit)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('900v3/index.html')"> 9.00 FW v3.0 </button>
+<button class="btn btn-multi" style="border-color:#00e5ff; box-shadow: 0 0 12px rgba(0,229,255,0.35);" onmouseover="msgs.innerHTML='PS4 9.00 FW GoldHEN Dedicated Host (Clean &amp; Lightweight)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('900goldhen/index.html')"> 9.00 FW GoldHEN </button>
+<button class="btn" onmouseover="msgs.innerHTML='PS4 9.00 FW Host v3.0'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('900goldhen/index.html')"> 9.00 FW v3.0 </button>
 <br>
 <button class="btn" onmouseover="msgs.innerHTML='Restore a Host to User&#8217;s Guide without using DNS'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('restore/index.html')"> Restore Host </button>
 <br>
@@ -110,6 +110,22 @@ function detectDevice() {
                     }
                 }, 1000);
                 renderCd672();
+            } else if (fwNum == 9.00) {
+                var cd = 2;
+                var msgEl = document.getElementById("msgs");
+                var renderCd900 = function() {
+                    if (msgEl) msgEl.innerHTML = "Loading 9.00 GoldHEN Host in " + cd + " seconds... <button onclick='clearInterval(" + cdInterval900 + "); msgs.innerHTML=\"PS4 Exploit &amp; Multi Firmware Host\";' class='btn' style='padding:3px 12px;font-size:12px;margin-left:10px;'>Cancel</button>";
+                };
+                var cdInterval900 = setInterval(function() {
+                    cd--;
+                    if (cd < 0) {
+                        clearInterval(cdInterval900);
+                        location.replace('900goldhen/index.html');
+                    } else {
+                        renderCd900();
+                    }
+                }, 1000);
+                renderCd900();
             } else if (fwNum >= 11.50 && fwNum < 13.50) {
                 var cd = 2;
                 var msgEl = document.getElementById("msgs");
