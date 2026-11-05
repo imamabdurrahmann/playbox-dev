@@ -78,7 +78,7 @@ function detectDevice() {
                     }
                 }, 1000);
                 renderCd();
-            } else if (fwNum == 5.05 || fwNum == 5.07) {
+            } else if (fwNum >= 5.00 && fwNum <= 5.07) {
                 var cd = 2;
                 var msgEl = document.getElementById("msgs");
                 var renderCd505 = function() {
@@ -94,7 +94,7 @@ function detectDevice() {
                     }
                 }, 1000);
                 renderCd505();
-            } else if (fwNum == 6.72) {
+            } else if (fwNum >= 6.70 && fwNum <= 6.72) {
                 var cd = 2;
                 var msgEl = document.getElementById("msgs");
                 var renderCd672 = function() {

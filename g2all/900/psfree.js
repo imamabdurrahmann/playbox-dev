@@ -802,6 +802,7 @@ async function main() {
 
     log('STAGE: achieve arbitrary read/write primitive');
     await make_arw(rdr, view2, pop);
+    if (window.onExploitProgress) window.onExploitProgress("Primitive Read/Write Berhasil Dibentuk!", 45);
 
     clear_log();
     // path to your script that will use the exploit

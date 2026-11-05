@@ -1829,11 +1829,20 @@ function runPayload(PLfile) {
 }
 
 kexploit().then(() => {
+	if (window.onExploitProgress) window.onExploitProgress("Root Kernel OK! Mengunduh &amp; Menyuntikkan GoldHEN...", 88);
 	setTimeout(() => {
 		runPayload("./goldhen_2.4b18.12.bin");
-		msgs.innerHTML = "GoldHEN v2.4b18.12 Loaded ...";
-	},500);
+		if (window.onExploitDone) {
+			window.onExploitDone("GoldHEN v2.4b18.12 Berhasil Dimuat ✔");
+		} else if (window.msgs) {
+			msgs.innerHTML = "GoldHEN v2.4b18.12 Loaded ...";
+		}
+	}, 500);
 }).catch(() => {
-    msgs.innerHTML = "Failed to Load! Restart Your Console ...";
-	msgs.style.color = "yellow";
+	if (window.onExploitFail) {
+		window.onExploitFail("Eksploitasi Gagal! Silakan Buka Ulang Browser Konsol.");
+	} else if (window.msgs) {
+		msgs.innerHTML = "Failed to Load! Restart Your Console ...";
+		msgs.style.color = "yellow";
+	}
 });

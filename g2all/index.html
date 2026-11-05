@@ -255,7 +255,7 @@ function detectDevice() {
             } else if (fwNum >= 7.00 && fwNum <= 8.52) {
                 targetEngine = "700";
                 if (notice) notice.innerHTML = "Engine Terpilih: <b>psfree WebKit</b> (FW 7.00 - 8.52)";
-            } else if (fwNum == 5.05 || fwNum == 5.07) {
+            } else if (fwNum >= 5.00 && fwNum <= 5.07) {
                 targetEngine = "505";
                 if (notice) notice.innerHTML = "Engine Terpilih: <b>WebKit UAF</b> (FW 5.05)";
             } else {
