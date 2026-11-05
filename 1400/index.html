@@ -18,6 +18,14 @@ function runHost() {
     var devText = document.getElementById("detected-text");
     var devBox = document.getElementById("device-info");
     var match = ua.match(/PlayStation 4[ /]([\d.]+)/i);
+    if (match) {
+        var detectedFwNum = parseFloat(match[1]);
+        if (detectedFwNum < 13.50) {
+            if (devText) devText.innerHTML = "&#127918; FW " + match[1] + " Dialihkan ke Host Multi FW...";
+            setTimeout(function() { window.location.replace("../g2all/index.html"); }, 600);
+            return;
+        }
+    }
     if (devText && devBox) {
         if (isPS4) {
             devText.innerHTML = "&#127918; Console Detected: PlayStation 4 (Firmware " + (match ? match[1] : "13.02 - 14.00") + ")";

@@ -236,12 +236,12 @@ function detectDevice() {
             devText.style.color = "#00ffcc";
             devBox.style.borderColor = "rgba(0, 255, 204, 0.5)";
 
-            if (fwNum >= 13.02 && fwNum <= 14.00) {
+            if (fwNum >= 13.50 && fwNum <= 14.00) {
                 targetEngine = "afterglow_1400";
                 if (notice) notice.innerHTML = "Firmware " + fwVersion + " cocok dengan Host Afterglow Dedicated.";
                 setTimeout(function() { window.location.replace("../1400/index.html"); }, 600);
                 return;
-            } else if (fwNum >= 11.50 && fwNum <= 13.00) {
+            } else if (fwNum >= 11.50 && fwNum <= 13.04) {
                 targetEngine = "slopkit";
                 if (notice) notice.innerHTML = "Engine Terpilih: <b>Slopkit / Afterglow</b> (FW 11.50 - 13.00)";
                 if (picker) picker.style.display = "flex";
@@ -284,7 +284,7 @@ function checkCacheInstalled(fw) {
         return true;
     }
     try {
-        if (fw >= 11.50 && fw <= 13.00 && localStorage.getItem('playbox_cached_slopkit') === '1') return true;
+        if (fw >= 11.50 && fw <= 13.04 && localStorage.getItem('playbox_cached_slopkit') === '1') return true;
         if (fw >= 10.00 && fw <= 11.02 && localStorage.getItem('playbox_cached_css') === '1') return true;
         if (fw >= 9.00 && fw <= 9.60 && localStorage.getItem('playbox_cached_900') === '1') return true;
         if (fw >= 7.00 && fw <= 8.52 && localStorage.getItem('playbox_cached_700') === '1') return true;
@@ -445,7 +445,7 @@ function userTriggerStart() {
             } else if (fwNum >= 10.00 && fwNum <= 11.02) {
                 window.location.replace("cachecss.html");
                 return;
-            } else if (fwNum >= 11.50 && fwNum <= 13.00) {
+            } else if (fwNum >= 11.50 && fwNum <= 13.04) {
                 window.location.replace("cacheslopkit.html");
                 return;
             }
@@ -492,7 +492,7 @@ function userTriggerStart() {
             script.src = "slopkit/chain_poops.js";
             script.onerror = onScriptError;
             document.head.appendChild(script);
-        } else if (fwNum >= 13.02 && fwNum <= 13.52) {
+        } else if (fwNum >= 13.02 && fwNum <= 13.04) {
             var script = document.createElement('script');
             script.type = 'module';
             script.src = "slopkit/jb.js";

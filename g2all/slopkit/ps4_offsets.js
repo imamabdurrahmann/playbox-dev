@@ -444,6 +444,35 @@ PS4["12.52"] = Object.assign({}, PS4["12.50"], {
     kpatch: "1250.bin",
 });
 
+PS4["13.02"] = Object.assign({}, PS4["13.00"], {
+    alias_of: "13.00",
+    k_idt_rsvd: 0x1c1d50,
+    k_sysctl_handle_int: 0x3fa0a0,
+    k_jmp_rsi: 0x47b31,
+    k_kl_lock: 0xe6c20,
+    k_evf_cv: 0x7849d8,
+    k_sysent: 0x1102b70,
+    k_sysent_661: 0x110a760,
+    k_oid_kern_file: 0x1a2f8a0,
+    k_oid_maxfilesperproc: 0x1a2f950,
+    k_oid_maxprocperuid: 0x1a3ba88,
+    k_oid_maxfiles: 0x1a2f9a8,
+    k_arg1_maxfilesperproc: 0x22cc47c,
+    k_arg1_maxprocperuid: 0x22cc478,
+    k_arg1_maxfiles: 0x22cc474,
+    k_prison0: 0x1a5c0c0,
+    k_rootvnode: 0x2136e90,
+    kpatch: "1302.bin",
+    payload: "payload.bin",
+    fw_status: "state=663-JB+KPATCH-PROVEN-on-hw-pass=51 shares=13.00 kpatch=1302.bin bug=663",
+});
+
+PS4["13.04"] = Object.assign({}, PS4["13.02"], {
+    alias_of: "13.00",
+    kpatch: "1302.bin",
+    fw_status: "state=663-JB+KPATCH-via-13.02 shares=13.00 kpatch=1302.bin bug=663",
+});
+
 export function offsetsFor(uaString) {
     const m = (uaString || "").match(/PlayStation\s+4[\/ ](\d+)\.(\d+)/);
     if (!m) return { key: null, off: null };
