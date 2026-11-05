@@ -126,7 +126,7 @@ function detectDevice() {
                     }
                 }, 1000);
                 renderCd900();
-            } else if (fwNum >= 11.50 && fwNum < 13.50) {
+            } else if ((fwNum >= 7.00 && fwNum <= 8.52) || (fwNum > 9.00 && fwNum <= 9.60) || (fwNum >= 10.00 && fwNum <= 13.00)) {
                 var cd = 2;
                 var msgEl = document.getElementById("msgs");
                 var renderCdMulti = function() {
