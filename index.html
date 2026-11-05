@@ -26,7 +26,7 @@
 <button class="btn btn-multi" onmouseover="msgs.innerHTML='PS4 GoldHEN Host for 5.05 and 7.00 to 13.00 FW - (Auto Exploit Selection)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('g2all/index.html')"> GoldHEN Multi FW </button>
 <button class="btn btn-multi" style="border-color:#00ff88; box-shadow: 0 0 15px rgba(0,255,136,0.4);" onmouseover="msgs.innerHTML='PS4 13.52 - 14.00 FW GoldHEN Host (Afterglow Engine - Dedicated Offline Cache)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('1400/index.html')"> 13.52 - 14.00 FW GoldHEN </button>
 <button class="btn btn-multi" style="border-color:#00e5ff; box-shadow: 0 0 12px rgba(0,229,255,0.35);" onmouseover="msgs.innerHTML='PS4 5.05 FW GoldHEN Dedicated Host (Clean &amp; Lightweight)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('505/index.html')"> 5.05 FW GoldHEN </button>
-<button class="btn" onmouseover="msgs.innerHTML='PS4 6.72 FW GoldHEN Host'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('672goldhen/index.html')"> 6.72 FW GoldHEN </button>
+<button class="btn btn-multi" style="border-color:#00e5ff; box-shadow: 0 0 12px rgba(0,229,255,0.35);" onmouseover="msgs.innerHTML='PS4 6.72 FW GoldHEN Dedicated Host (Clean &amp; Lightweight)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('672goldhen/index.html')"> 6.72 FW GoldHEN </button>
 <button class="btn" onmouseover="msgs.innerHTML='PS4 6.72 FW Host v3.0'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('672/index.html')"> 6.72 FW v3.0 </button>
 <br>
 <button class="btn" onmouseover="msgs.innerHTML='PS4 9.00 FW GoldHEN Host - (FontFaceSet Webkit)'" onmouseout="msgs.innerHTML='PS4 Exploit &amp; Multi Firmware Host'" onclick="location.replace('900goldhen/index.html')"> 9.00 FW GoldHEN </button>
@@ -94,6 +94,22 @@ function detectDevice() {
                     }
                 }, 1000);
                 renderCd505();
+            } else if (fwNum == 6.72) {
+                var cd = 2;
+                var msgEl = document.getElementById("msgs");
+                var renderCd672 = function() {
+                    if (msgEl) msgEl.innerHTML = "Loading 6.72 GoldHEN Host in " + cd + " seconds... <button onclick='clearInterval(" + cdInterval672 + "); msgs.innerHTML=\"PS4 Exploit &amp; Multi Firmware Host\";' class='btn' style='padding:3px 12px;font-size:12px;margin-left:10px;'>Cancel</button>";
+                };
+                var cdInterval672 = setInterval(function() {
+                    cd--;
+                    if (cd < 0) {
+                        clearInterval(cdInterval672);
+                        location.replace('672goldhen/index.html');
+                    } else {
+                        renderCd672();
+                    }
+                }, 1000);
+                renderCd672();
             } else if (fwNum >= 11.50 && fwNum < 13.50) {
                 var cd = 2;
                 var msgEl = document.getElementById("msgs");
