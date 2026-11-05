@@ -232,6 +232,7 @@ var hasStarted = false;
 var watchdogTimer = null;
 
 var PLfile = "goldhen_2.4b18.12.bin";
+var isCustomPayload = false;
 var LoadedMSG = "GoldHEN v2.4b18.12 Berhasil Dimuat ✔";
 window.useBinLoader = false;
 
@@ -332,6 +333,7 @@ function toggleExtraTools() {
 }
 
 function resolvePayloadSelection() {
+    if (isCustomPayload) return;
     var radios = document.getElementsByName("payloadChoice");
     var val = "goldhen_2.4b18.12";
     for (var i = 0; i < radios.length; i++) {
@@ -356,6 +358,7 @@ function resolvePayloadSelection() {
 
 function runExtraBin(fileName, prettyName) {
     cancelAutostart();
+    isCustomPayload = true;
     window.useBinLoader = false;
     PLfile = fileName;
     LoadedMSG = prettyName + " Berhasil Dimuat ✔";

@@ -181,6 +181,7 @@ var hasStarted = false;
 var watchdogTimer = null;
 var chosenPayload = "goldhen_2.4b18.12";
 var PLfile = "goldhen_2.4b18.12.bin";
+var isCustomPayload = false;
 var PLName = "GoldHEN v2.4b18.12";
 
 try {
@@ -303,7 +304,8 @@ function userTriggerStart() {
         autoTimer = null;
     }
     
-    chosenPayload = getSelectedPayload();
+    if (!isCustomPayload) {
+        chosenPayload = getSelectedPayload();
     if (chosenPayload === "goldhen_2.4b18.12") {
         PLfile = "goldhen_2.4b18.12.bin";
         PLName = "GoldHEN v2.4b18.12";
@@ -313,6 +315,7 @@ function userTriggerStart() {
     } else {
         PLfile = "";
         PLName = "Bin Loader";
+    }
     }
     
     document.getElementById("stage-landing").style.display = "none";
@@ -346,6 +349,7 @@ function userTriggerStart() {
 }
 
 function runExtraBin(bin, name) {
+    isCustomPayload = true;
     if (autoTimer) {
         clearInterval(autoTimer);
         autoTimer = null;
@@ -400,7 +404,7 @@ window.onExploitFail = function(msg) {
 
 function success() {
     if (watchdogTimer) { clearTimeout(watchdogTimer); watchdogTimer = null; }
-    if (chosenPayload === "binloader" || !PLfile) {
+    if (!isCustomPayload && (chosenPayload === "binloader" || !PLfile)) {
         var rMsg = document.getElementById("runnerMsg");
         if (rMsg) {
             rMsg.innerHTML = "BinLoader Aktif! Kirim payload melalui Port 9020";
